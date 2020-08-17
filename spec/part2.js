@@ -476,19 +476,19 @@
       })
 
       it('should only execute the function after the specified wait time', function() {
-        _.delay(callback, 100);
-        clock.tick(99);
+        _.delay(callback, 1000);
+        clock.tick(990);
 
         expect(callback).to.have.not.been.called;
 
-        clock.tick(1);
+        clock.tick(10);
 
         expect(callback).to.have.been.calledOnce;
       });
 
       it('should have successfully passed function arguments in', function() {
-        _.delay(callback, 100, 1, 2);
-        clock.tick(100);
+        _.delay(callback, 1000, 1, 2);
+        clock.tick(1000);
 
         expect(callback).to.have.been.calledWith(1, 2);
       });

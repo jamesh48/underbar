@@ -347,10 +347,14 @@
       });
 
       it('uses the result of `iterator` for uniqueness comparisons (sorted case)', function() {
-        var iterator = function(value) { return value === 1; };
+        var isOne = function(value) { return value === 1; };
         var numbers = [1, 2, 2, 3, 4, 4];
         
-        expect(_.uniq(numbers, true, iterator)).to.eql([1, 2]);
+        var roundNumber = function(number) { return Math.round(number)};
+        var otherNumbers = [11.2, 11.9, 12.4, 12.6];
+        
+        expect(_.uniq(numbers, true, isOne)).to.eql([1, 2]);
+        expect(_.uniq(otherNumbers, true, roundNumber)).to.eql([11.2, 11.9, 12.6]);
       });
 
       it('should produce a brand new array instead of modifying the input array', function() {

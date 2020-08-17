@@ -64,6 +64,7 @@
     describe('each', function() {
       checkForNativeMethods(function() {
         _.each([1,2,3,4], function(number) {});
+        _.each({1:1,2:2,3:3,4:4}, function(number) {});
       });
 
       it('should be a function', function() {

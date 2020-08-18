@@ -413,7 +413,7 @@
       it('should apply a function to every value in an object', function() {
         var addOneToEach = _.map({1:1, 2:2, 3:3 }, function(item) { return item + 1});
 
-        expect(doubledNumbers).to.eql([2, 3, 4]);
+        expect(addOneToEach).to.eql([2, 3, 4]);
       });
 
       it('should produce a brand new array instead of modifying the input array', function() {

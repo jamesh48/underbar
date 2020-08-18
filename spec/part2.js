@@ -13,7 +13,7 @@
       });
 
       it('should not mutate the input array', function() {
-        var input = [1,2,3,4,5];
+        var input = [1, 2, 3, 4, 5];
         var result = _.contains(input, 4);
 
         /*
@@ -39,28 +39,28 @@
          * that don't mutate their inputs!
          */
 
-        expect(input).to.eql([1,2,3,4,5])
+        expect(input).to.eql([1, 2, 3, 4, 5]);
       });
 
-      it('should return true given an array and a value from that array', function(){
-        var array = [1,2,3];
+      it('should return true given an array and a value from that array', function() {
+        var array = [1, 2, 3];
         var value = 1;
         expect(_.contains(array, value)).to.be.true;
       });
 
-      it('should return false given an array and a value not in that array', function(){
-        var array = [1,2,3];
+      it('should return false given an array and a value not in that array', function() {
+        var array = [1, 2, 3];
         var value = 4;
         expect(_.contains(array, value)).to.be.false;
       });
 
-      it('should return true given a object and a value from that object', function(){
+      it('should return true given a object and a value from that object', function() {
         var object = { a: 1, b: 2, c: 3 };
         var value = 1;
         expect(_.contains(object, value)).to.be.true;
       });
 
-      it('should return false given an object and a value not in that object', function(){
+      it('should return false given an object and a value not in that object', function() {
         var object = { a: 1, b: 2, c: 3 };
         var value = 4;
         expect(_.contains(object, value)).to.be.false;
@@ -115,7 +115,7 @@
     });
 
     describe('some', function() {
-      var isEven = function(number){
+      var isEven = function(number) {
         return number % 2 === 0;
       };
 
@@ -165,7 +165,7 @@
 
     describe('extend', function() {
       checkForNativeMethods(function() {
-        _.extend({ a: 1 },{ b: 1 }, { c: 1 });
+        _.extend({ a: 1 }, { b: 1 }, { c: 1 });
       });
 
       it('returns the first argument', function() {
@@ -201,7 +201,7 @@
       });
 
       it('should extend from multiple source objects', function() {
-        var extended = _.extend({ x: 1 }, { a: 2 }, { b:3 });
+        var extended = _.extend({ x: 1 }, { a: 2 }, { b: 3 });
 
         expect(extended).to.eql({ x: 1, a: 2, b: 3 });
       });
@@ -215,7 +215,7 @@
 
     describe('defaults', function() {
       checkForNativeMethods(function() {
-        _.defaults({ a: 1 },{ b: 1 }, { c: 1 });
+        _.defaults({ a: 1 }, { b: 1 }, { c: 1 });
       });
 
       it('should be a function', function() {
@@ -319,9 +319,9 @@
 
         _.defaults(destination, source);
 
-        expect(destination.a).to.equal('')
+        expect(destination.a).to.equal('');
         expect(destination.b).to.equal(0);
-        expect(isNaN(destination.c)).to.equal(true)
+        expect(isNaN(destination.c)).to.equal(true);
       });
 
       it('should copy properties source an arbitrary number of source objects', function() {
@@ -366,7 +366,7 @@
         var noop = _.once(function() {});
 
         expect(noop).to.be.an.instanceOf(Function);
-      })
+      });
 
       it('should only run a user-defined function if it has not been run before', function() {
         var num = 0;
@@ -382,7 +382,7 @@
       });
 
       it('should apply arguments to the user-defined function', function() {
-        var add = _.once(function(x,y,z) {
+        var add = _.once(function(x, y, z) {
           return x + y + z;
         });
 
@@ -390,13 +390,13 @@
       });
 
       it('should return the result of the first call for every subsequent call', function() {
-        var add = _.once(function(x,y,z) {
+        var add = _.once(function(x, y, z) {
           return x + y + z;
         });
 
-        expect(add(1,2,3)).to.equal(6);
-        expect(add(4,5,6)).to.equal(6);
-        expect(add(7,8,9)).to.equal(6);
+        expect(add(1, 2, 3)).to.equal(6);
+        expect(add(4, 5, 6)).to.equal(6);
+        expect(add(7, 8, 9)).to.equal(6);
       });
     });
 
@@ -415,7 +415,7 @@
         _.memoize(function add(a, b) {
           return a + b;
         });
-      })
+      });
 
       it('should produce the same result as the non-memoized version', function() {
         expect(add(1, 2)).to.equal(3);
@@ -446,9 +446,9 @@
         var spy = sinon.spy(function() { return 'Dummy output'; });
         var memoSpy = _.memoize(spy);
 
-        memoSpy([1,2,3]);
+        memoSpy([1, 2, 3]);
         expect(spy).to.have.been.calledOnce;
-        memoSpy([1,2,3]);
+        memoSpy([1, 2, 3]);
         expect(spy).to.have.been.calledOnce;
       });
 
@@ -457,9 +457,9 @@
         var spy = sinon.spy(function() { return 'Dummy output'; });
         var memoSpy = _.memoize(spy);
 
-        memoSpy([1,2,3]);
+        memoSpy([1, 2, 3]);
         expect(spy).to.have.been.calledOnce;
-        memoSpy(1,2,3);
+        memoSpy(1, 2, 3);
         expect(spy).to.have.been.calledTwice;
       });
     });
@@ -469,11 +469,11 @@
 
       beforeEach(function() {
         callback = sinon.spy();
-      })
+      });
 
       checkForNativeMethods(function() {
         _.delay(callback, 100);
-      })
+      });
 
       it('should only execute the function after the specified wait time', function() {
         _.delay(callback, 1000);
@@ -496,8 +496,8 @@
 
     describe('shuffle', function() {
       checkForNativeMethods(function() {
-        _.shuffle([1, 2, 3, 4])
-      })
+        _.shuffle([1, 2, 3, 4]);
+      });
 
       it('should not modify the original object', function() {
         var numbers = [4, 5, 6];
@@ -532,7 +532,7 @@
 
   });
 
-  function checkForNativeMethods(runUnderbarFunction) {
+  const checkForNativeMethods = function checkForNativeMethods(runUnderbarFunction) {
     it('should not use the native version of any underbar methods in its implementation', function() {
       // These spies are set up in testSupport.js
       runUnderbarFunction();
@@ -544,5 +544,5 @@
       expect(Array.prototype.every.called).to.equal(false);
       expect(Array.prototype.some.called).to.equal(false);
     });
-  }
+  };
 }());

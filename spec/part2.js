@@ -532,7 +532,7 @@
 
   });
 
-  const checkForNativeMethods = function checkForNativeMethods(runUnderbarFunction) {
+  function checkForNativeMethods(runUnderbarFunction) {
     it('should not use the native version of any underbar methods in its implementation', function() {
       // These spies are set up in testSupport.js
       runUnderbarFunction();

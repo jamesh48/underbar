@@ -55,11 +55,12 @@
   _.each = function(collection, iterator) {
     if (Array.isArray(collection)) {
       for (let i = 0; i < collection.length; i++) {
-        iterator(collection[i]);
+        iterator(collection[i], i, collection);
+
       }
     } else if (typeof collection === 'object') {
       for (let key in collection) {
-        iterator(collection[key]);
+        iterator(collection[key], key, collection);
       }
     }
   };
@@ -71,7 +72,6 @@
     // implemented for you. Instead of using a standard `for` loop, though,
     // it uses the iteration helper `each`, which you will need to write.
     var result = -1;
-
     _.each(array, function(item, index) {
       if (item === target && result === -1) {
         result = index;
@@ -114,6 +114,13 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    // if (iterator) {
+    //   alert(iterator);
+    //   alert(array);
+    // }
+    //boolean- value === 1 array- [1, 2, 3, 4]
+    let unique = [...new Set(array)];
+    return unique;
   };
 
 

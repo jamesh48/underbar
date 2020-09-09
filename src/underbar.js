@@ -114,15 +114,18 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
-    // if (iterator) {
-    //   alert(iterator);
-    //   alert(array);
-    // }
-    //boolean- value === 1 array- [1, 2, 3, 4]
+    let resultArr = [];
     let unique = [...new Set(array)];
+    if (iterator) {
+      for (let i = 0; i < unique.length; i++) {
+        resultArr.push(iterator(unique[i]));
+      }
+      let final = resultArr.filter((x, index, array) => array.indexOf(x) === index);
+      let finalArr = array.slice(0, final.length);
+      return finalArr;
+    }
     return unique;
   };
-
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
@@ -185,7 +188,6 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-
     if (accumulator === undefined) {
       accumulator = collection[0];
       for (let i = 1; i < collection.length; i++) {
@@ -207,6 +209,13 @@
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
+    if (typeof collection === 'object') {
+      for (let key in collection) {
+        if (collection[key] === target) {
+          return true;
+        }
+      }
+    }
     return _.reduce(collection, function(wasFound, item) {
       if (wasFound) {
         return true;
@@ -218,8 +227,31 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
+
+    let coolIterator = function(val) {
+      return val;
+    };
+
+    if (!iterator) {
+      for (let i = 0; i < collection.length; i++) {
+        let currentResult = coolIterator(collection[i]);
+        if (currentResult === 0 || currentResult === undefined || currentResult === null || currentResult === false) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    for (let i = 0; i < collection.length; i++) {
+      let currentResult = iterator(collection[i]);
+      if (currentResult === 0 || currentResult === undefined || currentResult === null || currentResult === false) {
+        return false;
+      }
+    }
+    return true;
   };
+
+
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one

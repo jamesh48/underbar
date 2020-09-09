@@ -224,6 +224,16 @@
     }, false);
   };
 
+  _.keyContains = function(collection, target) {
+    if (typeof collection === 'object') {
+      for (let key in collection) {
+        if (key === target) {
+          return true;
+        }
+      }
+      return false;
+    }
+  };
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
@@ -310,7 +320,19 @@
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    for (let i = 0; i < arguments.length; i++) {
+      for (let key in arguments[i]) {
+        let test = _.keyContains(obj, key);
+        if (test) {
+          continue;
+        } else {
+          obj[key] = arguments[i][key];
+        }
+      }
+    }
+    return obj;
   };
+
 
 
   /**

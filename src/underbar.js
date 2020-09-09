@@ -231,19 +231,23 @@
     let coolIterator = function(val) {
       return val;
     };
-
-    if (!iterator) {
-      for (let i = 0; i < collection.length; i++) {
-        let currentResult = coolIterator(collection[i]);
-        if (currentResult === 0 || currentResult === undefined || currentResult === null || currentResult === false) {
-          return false;
-        }
-      }
-      return true;
-    }
+    let currentResult;
+    // if (!iterator) {
+    //   for (let i = 0; i < collection.length; i++) {
+    //     let currentResult = coolIterator(collection[i]);
+    //     if (currentResult === 0 || currentResult === undefined || currentResult === null || currentResult === false) {
+    //       return false;
+    //     }
+    //   }
+    //   return true;
+    // }
 
     for (let i = 0; i < collection.length; i++) {
-      let currentResult = iterator(collection[i]);
+      if (!iterator) {
+        currentResult = coolIterator(collection[i]);
+      } else {
+        currentResult = iterator(collection[i]);
+      }
       if (currentResult === 0 || currentResult === undefined || currentResult === null || currentResult === false) {
         return false;
       }
@@ -256,7 +260,23 @@
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
-    // TIP: There's a very clever way to re-use every() here.
+    let currentResult;
+
+    let coolIterator = function(val) {
+      return val;
+    };
+
+    for (let i = 0; i < collection.length; i++) {
+      if (!iterator) {
+        currentResult = coolIterator(collection[i]);
+      } else {
+        currentResult = iterator(collection[i]);
+      }
+      if (currentResult !== 0 && currentResult !== undefined && currentResult !== null && currentResult !== false) {
+        return true;
+      }
+    }
+    return false;
   };
 
 

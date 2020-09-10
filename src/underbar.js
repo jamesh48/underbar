@@ -83,13 +83,13 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
-    let filtered = [];
-    for (let i = 0; i < collection.length; i++) {
-      if (test(collection[i])) {
-        filtered.push(collection[i]);
+    let filteredArr = [];
+    for (let index = 0; index < collection.length; index++) {
+      if (test(collection[index], index, collection)) {
+        filteredArr.push(collection[index]);
       }
     }
-    return filtered;
+    return filteredArr;
   };
 
   // Return all elements of an array that don't pass a truth test.
@@ -114,17 +114,38 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
-    let resultArr = [];
-    let unique = [...new Set(array)];
-    if (iterator) {
-      for (let i = 0; i < unique.length; i++) {
-        resultArr.push(iterator(unique[i]));
+    if (!iterator) {
+      let uniqueArr = [...new Set(array)];
+      return uniqueArr;
+    } else {
+      let iteratedArr = [];
+      for (let i = 0; i < array.length; i++) {
+        let currentResult = iterator(array[i]);
+        iteratedArr.push(currentResult);
       }
-      let final = resultArr.filter((x, index, array) => array.indexOf(x) === index);
-      let finalArr = array.slice(0, final.length);
+
+      let uniqueIteratedArr = _.filter(iteratedArr, function (item, index, iteratedArr) {
+        let result = iteratedArr.indexOf(item) === index;
+        return result;
+      });
+
+      let finalArr = [];
+      for (let i = 0, j = 0; i < array.length; i++, j++) {
+        if (iterator(array[i]) === uniqueIteratedArr[j]) {
+          finalArr.push(array[i]);
+        } else {
+          j--;
+        }
+      }
+
+      //A bit Hacky and designed to solve the particular edge case, but it runs :D
+      //i = 0, j = 0; 11 === 11, push 11.2
+      //i = 1, j = 1; 12 === 12, push 11.9
+      //i = 2, j = 2; 12 !== 13, no push, j--
+      //i = 3, j = 2; 13 === 13, push 12.6
+
       return finalArr;
     }
-    return unique;
   };
 
   // Return the results of applying an iterator to each element.
@@ -398,6 +419,7 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    setTimeout(...arguments);
   };
 
 

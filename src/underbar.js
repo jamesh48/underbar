@@ -375,7 +375,21 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    let cache = {};
+    return function() {
+      let key = JSON.stringify(arguments);
+      if (cache[key]) {
+        return cache[key];
+      } else {
+        let val = func.apply(this, arguments);
+        cache[key] = val;
+        return val;
+      }
+    };
   };
+
+  //Copied almost verbatim, the example in conclusion of this website without copy/pasting :p, I understand this concept maybe 70%.
+  //https://codeburst.io/understanding-memoization-in-3-minutes-2e58daf33a19
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.

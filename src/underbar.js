@@ -55,12 +55,35 @@
   _.each = function(collection, iterator) {
     if (Array.isArray(collection)) {
       for (let i = 0; i < collection.length; i++) {
-        iterator(collection[i], i, collection);
+        let currentItem = iterator(collection[i], i, collection);
 
+        //Apply Use Cases...
+        if (arguments[2] && typeof arguments[2] === 'function') {
+          let test = arguments[2];
+          //Map
+          if (JSON.stringify(test) === JSON.stringify(function(cItem) {
+            array.push(cItem);
+          })) {
+            let mapped = arguments[2];
+            mapped(currentItem);
+          }
+        }
       }
+
     } else if (typeof collection === 'object') {
       for (let key in collection) {
-        iterator(collection[key], key, collection);
+        let currentItem = iterator(collection[key], key, collection);
+        //Apply Use Cases...
+        if (arguments[2] && typeof arguments[2] === 'function') {
+          let test = arguments[2];
+          //Map
+          if (JSON.stringify(test) === JSON.stringify(function(cItem) {
+            array.push(cItem);
+          })) {
+            let mapped = arguments[2];
+            mapped(currentItem);
+          }
+        }
       }
     }
   };
@@ -153,19 +176,13 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
-    let mapped = [];
-    if (Array.isArray(collection)) {
-      for (let i = 0; i < collection.length; i++) {
-        let mappedItem = iterator(collection[i]);
-        mapped.push(mappedItem);
-      }
-    } else {
-      for (let key in collection) {
-        let mappedItem = iterator(collection[key]);
-        mapped.push(mappedItem);
-      }
-    }
-    return mapped;
+    let array = [];
+
+    const mapFunction = function(cItem) {
+      array.push(cItem);
+    };
+    let mapped = _.each.apply(this, [collection, iterator, mapFunction]);
+    return array;
   };
 
   /*
